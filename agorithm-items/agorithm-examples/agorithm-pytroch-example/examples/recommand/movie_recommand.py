@@ -2,7 +2,7 @@
 
 # -------------------------------------------------------------------------------
 # Name:         movie_recommand
-# Description:
+# Description:  https://blog.csdn.net/fjssharpsword/article/details/95583601
 # Author:       orange
 # Date:         2020/12/30
 # -------------------------------------------------------------------------------
