@@ -1,0 +1,6 @@
+.DS_Store
+*.zip
+*.jar
+/test_sl/
+.idea
+.gitignore
