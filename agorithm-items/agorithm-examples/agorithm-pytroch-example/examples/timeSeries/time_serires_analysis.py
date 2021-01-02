@@ -51,6 +51,7 @@ def create_dataset(dataset, look_back=2):
 # 创建好输入输出
 data_X, data_Y = create_dataset(dataset)
 
+
 # 划分训练集和测试集，70% 作为训练集
 train_size = int(len(data_X) * 0.7)
 test_size = len(data_X) - train_size
