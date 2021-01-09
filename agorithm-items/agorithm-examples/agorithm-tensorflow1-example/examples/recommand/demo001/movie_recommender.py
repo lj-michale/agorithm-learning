@@ -160,13 +160,13 @@ def load_params():
 # 嵌入矩阵的维度
 embed_dim = 32
 # 用户ID个数
-uid_max = max(features.take(0,1)) + 1 # 6040
+uid_max = max(features.take(0, 1)) + 1 # 6040
 # 性别个数
-gender_max = max(features.take(2,1)) + 1 # 1 + 1 = 2
+gender_max = max(features.take(2, 1)) + 1 # 1 + 1 = 2
 # 年龄类别个数
-age_max = max(features.take(3,1)) + 1 # 6 + 1 = 7
+age_max = max(features.take(3, 1)) + 1 # 6 + 1 = 7
 # 职业个数
-job_max = max(features.take(4,1)) + 1# 20 + 1 = 21
+job_max = max(features.take(4, 1)) + 1# 20 + 1 = 21
 # 电影ID个数
 movie_id_max = max(features.take(1,1)) + 1 # 3952
 # 电影类型个数
