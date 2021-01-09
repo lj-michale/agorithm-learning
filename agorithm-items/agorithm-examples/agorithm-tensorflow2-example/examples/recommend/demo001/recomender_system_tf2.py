@@ -9,6 +9,8 @@
 import random
 import pickle
 import re
+from imp import reload
+
 import pandas as pd
 from sklearn.model_selection import train_test_split
 import numpy as np
@@ -29,7 +31,6 @@ users_data_path = "E:\\OpenSource\\GitHub\\agorithm-learning\\agorithm-items\\ag
 movies_data_path = "E:\\OpenSource\\GitHub\\agorithm-learning\\agorithm-items\\agorithm-examples\\agorithm-tensorflow2-example\\examples\\recommend\\demo001\\ml-1m\\movies.dat"
 ratings_data_path = "E:\\OpenSource\\GitHub\\agorithm-learning\\agorithm-items\\agorithm-examples\\agorithm-tensorflow2-example\\examples\\recommend\\demo001\\ml-1m\\ratings.dat"
 
-
 # 加载数据集
 users_title = ['UserID', 'Gender', 'Age', 'OccupationID', 'Zip-code']
 movies_title = ['MovieID', 'Title', 'Genres']
@@ -47,7 +48,7 @@ def load_data():
     """
     # 读取User数据
     users_title = ['UserID', 'Gender', 'Age', 'JobID', 'Zip-code']
-    users = pd.read_csv('./ml-1m/users.dat', sep='::', header=None, names=users_title, engine='python')
+    users = pd.read_csv(users_data_path, sep='::', header=None, names=users_title, engine='python')
     users = users.filter(regex='UserID|Gender|Age|JobID')
     users_orig = users.values
     # 改变User数据中性别和年龄
@@ -59,7 +60,7 @@ def load_data():
 
     # 读取Movie数据集
     movies_title = ['MovieID', 'Title', 'Genres']
-    movies = pd.read_csv('./ml-1m/movies.dat', sep='::', header=None, names=movies_title, engine='python')
+    movies = pd.read_csv(movies_data_path, sep='::', header=None, names=movies_title, engine='python')
     movies_orig = movies.values
     # 将Title中的年份去掉
     pattern = re.compile(r'^(.*)\((\d+)\)$')
@@ -104,7 +105,7 @@ def load_data():
 
     # 读取评分数据集
     ratings_title = ['UserID', 'MovieID', 'ratings', 'timestamps']
-    ratings = pd.read_csv('./ml-1m/ratings.dat', sep='::', header=None, names=ratings_title, engine='python')
+    ratings = pd.read_csv(ratings_data_path, sep='::', header=None, names=ratings_title, engine='python')
     ratings = ratings.filter(regex='UserID|MovieID|ratings')
 
     # 合并三个表
@@ -176,9 +177,7 @@ filter_num = 8
 # 电影ID转下标的字典，数据集中电影ID跟下标不一致，比如第5行的数据电影ID不一定是5
 movieid2idx = {val[0]:i for i, val in enumerate(movies.values)}
 
-
 # 文本卷积网络
-
 
 # 超参
 # Number of Epochs
@@ -280,7 +279,7 @@ def get_movie_feature_layer(movie_id_embed_layer, movie_categories_embed_layer, 
 tf.keras.layers.experimental
 
 print(" ############################### 构建计算图 ############################### ")
-MODEL_DIR = "./models"
+MODEL_DIR = "E:\\OpenSource\\GitHub\\agorithm-learning\\agorithm-items\\agorithm-examples\\agorithm-tensorflow2-example\\examples\\recommend\\demo001\\models"
 
 
 class mv_network(object):
@@ -334,8 +333,8 @@ class mv_network(object):
         self.ComputeMetrics = tf.keras.metrics.MeanAbsoluteError()
 
         if tf.io.gfile.exists(MODEL_DIR):
-            #  print('Removing existing model dir: {}'.format(MODEL_DIR))
-            #  tf.io.gfile.rmtree(MODEL_DIR)
+            print('Removing existing model dir: {}'.format(MODEL_DIR))
+            tf.io.gfile.rmtree(MODEL_DIR)
             pass
         else:
             tf.io.gfile.makedirs(MODEL_DIR)
@@ -545,6 +544,7 @@ def rating_movie(mv_net, user_id_val, movie_id_val):
                                   titles])
     return (inference_val.numpy())
 
+
 rating_movie(mv_net, 234, 1401)
 
 
@@ -604,8 +604,8 @@ def recommend_same_type_movie(movie_id_val, top_k=20):
     sim = (probs_similarity.numpy())
     # results = (-sim[0]).argsort()[0:top_k]
     # print(results)
-    print("您看的电影是：{}".format(movies_orig[movieid2idx[movie_id_val]]))
-    print("以下是给您的推荐：")
+    print(" 您看的电影是：{}".format(movies_orig[movieid2idx[movie_id_val]]))
+    print(" 以下是给您的推荐：")
     p = np.squeeze(sim)
     p[np.argsort(p)[:-top_k]] = 0
     p = p / np.sum(p)
@@ -631,11 +631,11 @@ def recommend_your_favorite_movie(user_id_val, top_k=10):
 
     probs_similarity = tf.matmul(probs_embeddings, tf.transpose(movie_matrics))
     sim = (probs_similarity.numpy())
-    #     print(sim.shape)
-    #     results = (-sim[0]).argsort()[0:top_k]
-    #     print(results)
-    #     sim_norm = probs_norm_similarity.eval()
-    #     print((-sim_norm[0]).argsort()[0:top_k])
+    #  print(sim.shape)
+    #  results = (-sim[0]).argsort()[0:top_k]
+    #  print(results)
+    #  sim_norm = probs_norm_similarity.eval()
+    #  print((-sim_norm[0]).argsort()[0:top_k])
     print("以下是给您的推荐：")
     p = np.squeeze(sim)
     p[np.argsort(p)[:-top_k]] = 0
