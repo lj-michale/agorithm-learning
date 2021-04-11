@@ -688,6 +688,7 @@ def recommend_same_type_movie(movie_id_val, top_k=20):
 
 recommend_same_type_movie(1401, 20)
 
+
 # 推荐您喜欢的电影
 # 思路是使用用户特征向量与电影特征矩阵计算所有电影的评分，取评分最高的top_k个，同样加了些随机选择部分。
 def recommend_your_favorite_movie(user_id_val, top_k=10):
@@ -705,10 +706,8 @@ def recommend_your_favorite_movie(user_id_val, top_k=10):
         #     print(sim.shape)
         #     results = (-sim[0]).argsort()[0:top_k]
         #     print(results)
-
         #     sim_norm = probs_norm_similarity.eval()
         #     print((-sim_norm[0]).argsort()[0:top_k])
-
         print("以下是给您的推荐：")
         p = np.squeeze(sim)
         p[np.argsort(p)[:-top_k]] = 0

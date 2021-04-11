@@ -254,7 +254,7 @@ def get_movie_cnn_layer(movie_titles):
     pool_layer_lst = []
     for window_size in window_sizes:
         conv_layer = tf.keras.layers.Conv2D(filter_num, (window_size, embed_dim), 1, activation='relu')(movie_title_embed_layer_expand)
-        maxpool_layer = tf.keras.layers.MaxPooling2D(pool_size=(sentences_size - window_size + 1 ,1), strides=1)(conv_layer)
+        maxpool_layer = tf.keras.layers.MaxPooling2D(pool_size=(sentences_size - window_size + 1,1), strides=1)(conv_layer)
         pool_layer_lst.append(maxpool_layer)
     # Dropout层
     pool_layer = tf.keras.layers.concatenate(pool_layer_lst, 3, name="pool_layer")
@@ -279,7 +279,7 @@ def get_movie_feature_layer(movie_id_embed_layer, movie_categories_embed_layer, 
 tf.keras.layers.experimental
 
 print(" ############################### 构建计算图 ############################### ")
-MODEL_DIR = "E:\\OpenSource\\GitHub\\agorithm-learning\\agorithm-items\\agorithm-examples\\agorithm-tensorflow2-example\\examples\\recommend\\demo001\\models"
+MODEL_DIR = "models"
 
 
 class mv_network(object):
@@ -333,8 +333,8 @@ class mv_network(object):
         self.ComputeMetrics = tf.keras.metrics.MeanAbsoluteError()
 
         if tf.io.gfile.exists(MODEL_DIR):
-            print('Removing existing model dir: {}'.format(MODEL_DIR))
-            tf.io.gfile.rmtree(MODEL_DIR)
+            # print('Removing existing model dir: {}'.format(MODEL_DIR))
+            # tf.io.gfile.rmtree(MODEL_DIR)
             pass
         else:
             tf.io.gfile.makedirs(MODEL_DIR)
