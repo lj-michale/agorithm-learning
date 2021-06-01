@@ -21,7 +21,6 @@ train_ds = train_ds.shuffle(BUFFER_SIZE)
 train_ds = train_ds.padded_batch(BATCH_SIZE, train_ds.output_shapes)
 test_ds = test_ds.padded_batch(BATCH_SIZE, test_ds.output_shapes)
 
-
 # geektutu.com
 tokenizer = info.features['text'].encoder
 print ('词汇个数:', tokenizer.vocab_size)
