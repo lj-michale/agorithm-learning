@@ -231,7 +231,7 @@ import json
 import pprint
 json_str = model.to_json()
 pprint.pprint(json.loads(json_str))
-# 从json中重建模型
+# 从json中重建模型basic_operations
 fresh_model = tf.keras.models.model_from_json(json_str)
 # 保持为yaml格式  #需要提前安装pyyaml
 yaml_str = model.to_yaml()
