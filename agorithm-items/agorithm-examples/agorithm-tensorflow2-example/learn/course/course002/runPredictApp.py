@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-#
 
 # -------------------------------------------------------------------------------
-# Name:         AuroraRecommendApp
-# Description:  极光大数据基于NLP+CNN文本消息推荐系统
-# Author:       LJ.Michale
+# Name:         runPredictApp
+# Description:
+# Author:       orange
 # Date:         2021/7/11
 # -------------------------------------------------------------------------------
 
 from learn.course.course002.log.LoggingUtil import Logger
-
 
 if __name__ == '__main__':
 
@@ -16,6 +15,4 @@ if __name__ == '__main__':
                   "-example\\log\\logger.log "
     logger = Logger(__name__, logger_path).Logger
 
-    logger.info("========================== AURORA 文本推荐系统模型训练 Starting =====================================")
-
-    logger.info("========================== AURORA 文本推荐系统模型训练 Ending =======================================")
+    logger.info("========================== AURORA 文本推荐系统开始预测 Starting =====================================")
